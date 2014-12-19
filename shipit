@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#declare varaibles
+counter=0
+
+#load config variables
+source config.sh
+
+#load array of drive ids
+source drives.sh
+
+echo "creating signature file" 
+#check signatures folder
+mkdir -p ./signatures;
+echo "creating respective S3 buckets corresponding folders "
+
+#loop to upper limit creating respective files and puting signatures
+#for x in {1..$number_of_files}; do
+#    mkdir ./signatures/$cloud_prefix$x
+#done
+
+#for (( c=1; c<=$number_of_files; c++ ))
+#do
+#	mkdir ./signatures/$cloud_prefix$c
+#done
+
+for drive in ${drives[@]} 
+do :
+   let counter+=1
+   s_three=$cloud_prefix$counter
+   file_name=./signatures/$s_three
+
+   #delete existing folders and manifest files
+   echo "Delete existing S3 file"
+   rm -f $file_name
+   rm -f $file_name/"manifest.txt"
+
+   #create manifestfiles and required directories
+   echo "create manifestfiles and required directories"
+   drive_manifest=$file_name/"manifest.txt"
+   mkdir $file_name
+   chmod 777 $file_name
+   sed -e "s/drive_id/$drive/" -e "s/bucket_id/$s_three/"  -e "s/aws_key/$aws_key/" <$manifest_file_name > $drive_manifest
+
+   #run AWS create job command
+   java -jar lib/AWSImportExportWebServiceTool-1.0.jar CreateJob Import $drive_manifest $file_name 
+
+done
+
+echo "Done"
+#echo $cloud_prefix

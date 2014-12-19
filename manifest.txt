@@ -1,0 +1,32 @@
+manifestVersion:2.0
+generator:Text editor
+accessKeyId:aws_key
+bucket:bucket_id
+deviceId:drive_id
+eraseDevice:yes
+serviceLevel:standard
+
+customs:
+dataDescription: This device contains movies to be backed up in the cloud
+encryptedData: no
+encryptedClassification: none
+exportCertifierName: name
+requiresExportLicense: no
+deviceValue: cost
+deviceCountryOfOrigin: Country
+deviceType: external storage device
+
+returnAddress:
+    name:name
+    company:companyname 
+    street1:Address
+    street2:
+    street3:
+    city:city
+    stateOrProvince: city
+    postalCode:code
+    country: country
+    phoneNumber:number
+notificationEmail: email addresses
+
+
